@@ -62,7 +62,7 @@ class CSP:
         del assignment[var]
         return True
 
-    ef backjumping_search(self):
+    def backjumping_search(self):
         return self._backjump({}, None)
 
     def _backjump(self, assignment, last_failed_var):
@@ -148,3 +148,21 @@ class CSP:
                 for conf_var, conf_domain in reduced_domains.items():
                     self.domains[conf_var] = conf_domain
         return None
+
+    if __name__ == '__main__':
+        csp = CSP(['A', 'B', 'C'], {1, 2, 3})
+        csp.add_constraint(lambda a, b: a != b, 'A', 'B')
+        csp.add_constraint(lambda b, c: b != c, 'B', 'C')
+
+        print('Backtracking:')
+        solution = csp.backtrack_search()
+        print(solution)
+
+        print('Backjumping:')
+        solution = csp.backjumping_search()
+        print(solution)
+
+        print('Forward Checking:')
+        solution = csp.forward_checking_search()
+        print(solution)
+
